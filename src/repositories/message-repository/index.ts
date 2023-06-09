@@ -15,10 +15,17 @@ async function postMessage(
 	});
 }
 
-async function getMessages(from: string): Promise<messages[]> {
+async function getMessages(user: string): Promise<messages[]> {
 	return await prisma.messages.findMany({
 		where: {
-			from: from,
+			OR: [
+				{
+					from: user,
+				},
+				{
+					to: user,
+				},
+			],
 		},
 		orderBy: {
 			createdAt: "asc",

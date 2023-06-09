@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { messageService } from "services/message-service";
+import { messageService } from "../services/message-service";
 
 export async function generateResponse(req: Request, res: Response) {
 	/*
@@ -24,6 +24,7 @@ export async function getChat(req: Request, res: Response) {
     */
 
 	const { user } = req.body;
+	console.log(user);
 	try {
 		const chatHistory = await messageService.retrieveChat(user);
 		return res.status(200).send(chatHistory);

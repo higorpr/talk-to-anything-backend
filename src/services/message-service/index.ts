@@ -17,8 +17,8 @@ async function generateAIResponse(toUser: string) {
 	return await messageRepository.postMessage(toUser, from, message);
 }
 
-async function retrieveChat(from: string): Promise<messages[]> {
-	return await messageRepository.getMessages(from);
+async function retrieveChat(user: string): Promise<messages[]> {
+	return await messageRepository.getMessages(user);
 }
 
 export const messageService = {

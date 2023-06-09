@@ -1,4 +1,4 @@
-import { generateResponse, getChat } from "controllers/message-controller";
+import { generateResponse, getChat } from "../controllers/message-controller";
 import { Router } from "express";
 
 const messageRouter = Router();
