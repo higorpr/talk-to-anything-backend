@@ -6,7 +6,6 @@
 	"scripts": {
 		"prebuild": "rm -rf dist",
 		"build": "tsc && tsc-alias",
-		"prepare": "husky install",
 		"start": "node ./dist/src/server.js",
 		"migration:run": "prisma migrate deploy",
 		"migration:generate": "npm run dev:load-envs prisma migrate dev",
