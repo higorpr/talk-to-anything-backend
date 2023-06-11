@@ -35,9 +35,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+exports.__esModule = true;
 exports.messageService = void 0;
-var message_repository_1 = require("repositories/message-repository");
+var message_repository_1 = require("../../repositories/message-repository");
+var axios_1 = __importDefault(require("axios"));
 function postChatMessage(to, from, message) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
@@ -48,25 +52,37 @@ function postChatMessage(to, from, message) {
         });
     });
 }
-function generateAIResponse(toUser) {
+function generateAIResponse(toUser, userMessage) {
     return __awaiter(this, void 0, void 0, function () {
-        var message, from;
+        var apiEndpoint, headers, data, ChatResponse, ChatAnswer, from;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    message = "This is an automatic answer that is not yet connected to ChatGPT";
+                    apiEndpoint = process.env.OPENAI_ENDPOINT;
+                    headers = {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer ".concat(process.env.OPENAI_KEY)
+                    };
+                    data = {
+                        model: "gpt-3.5-turbo",
+                        messages: [{ role: "user", content: userMessage }]
+                    };
+                    return [4 /*yield*/, axios_1["default"].post(apiEndpoint, data, { headers: headers })];
+                case 1:
+                    ChatResponse = _a.sent();
+                    ChatAnswer = ChatResponse.data.choices[0].message.content;
                     from = "TalkToAnything";
-                    return [4 /*yield*/, message_repository_1.messageRepository.postMessage(toUser, from, message)];
-                case 1: return [2 /*return*/, _a.sent()];
+                    return [4 /*yield*/, message_repository_1.messageRepository.postMessage(toUser, from, ChatAnswer)];
+                case 2: return [2 /*return*/, _a.sent()];
             }
         });
     });
 }
-function retrieveChat(from) {
+function retrieveChat(user) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, message_repository_1.messageRepository.getMessages(from)];
+                case 0: return [4 /*yield*/, message_repository_1.messageRepository.getMessages(user)];
                 case 1: return [2 /*return*/, _a.sent()];
             }
         });
@@ -75,5 +91,5 @@ function retrieveChat(from) {
 exports.messageService = {
     postChatMessage: postChatMessage,
     retrieveChat: retrieveChat,
-    generateAIResponse: generateAIResponse,
+    generateAIResponse: generateAIResponse
 };

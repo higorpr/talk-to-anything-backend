@@ -1,5 +1,6 @@
-import { messages } from "@prisma/client";
-import { prisma } from "config/db";
+// import { messages } from "@prisma/client";
+import { messages } from "prisma/prisma-client";
+import { prisma } from "../../config/db";
 
 async function postMessage(
 	to: string,

@@ -35,9 +35,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.getChat = exports.generateResponse = void 0;
-var message_service_1 = require("services/message-service");
+var message_service_1 = require("../services/message-service");
 function generateResponse(req, res) {
     return __awaiter(this, void 0, void 0, function () {
         var _a, user, message, chat, err_1;
@@ -52,7 +52,7 @@ function generateResponse(req, res) {
                     return [4 /*yield*/, message_service_1.messageService.postChatMessage(chat, user, message)];
                 case 2:
                     _b.sent();
-                    return [4 /*yield*/, message_service_1.messageService.generateAIResponse(user)];
+                    return [4 /*yield*/, message_service_1.messageService.generateAIResponse(user, message)];
                 case 3:
                     _b.sent();
                     return [2 /*return*/, res.sendStatus(201)];
@@ -72,7 +72,7 @@ function getChat(req, res) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    user = req.body.user;
+                    user = req.params.user;
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 3, , 4]);

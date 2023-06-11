@@ -1,6 +1,6 @@
-import { messages } from "@prisma/client";
+import { messageRepository } from "../../repositories/message-repository";
+import { messages } from "prisma/prisma-client";
 import axios from "axios";
-import { messageRepository } from "repositories/message-repository";
 
 async function postChatMessage(
 	to: string,
