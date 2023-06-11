@@ -3,6 +3,6 @@ import { Router } from "express";
 
 const messageRouter = Router();
 
-messageRouter.post("/", generateResponse).get("/", getChat);
+messageRouter.post("/", generateResponse).get("/:user", getChat);
 
 export { messageRouter };

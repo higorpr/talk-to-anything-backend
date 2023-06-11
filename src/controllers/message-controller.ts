@@ -11,7 +11,7 @@ export async function generateResponse(req: Request, res: Response) {
 
 	try {
 		await messageService.postChatMessage(chat, user, message);
-		await messageService.generateAIResponse(user);
+		await messageService.generateAIResponse(user, message);
 		return res.sendStatus(201);
 	} catch (err) {
 		console.log(err);
@@ -23,8 +23,7 @@ export async function getChat(req: Request, res: Response) {
         Retrieve chat messages between user and chatGPT ordered by time
     */
 
-	const { user } = req.body;
-	console.log(user);
+	const { user } = req.params;
 	try {
 		const chatHistory = await messageService.retrieveChat(user);
 		return res.status(200).send(chatHistory);

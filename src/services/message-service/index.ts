@@ -1,4 +1,5 @@
 import { messages } from "@prisma/client";
+import axios from "axios";
 import { messageRepository } from "repositories/message-repository";
 
 async function postChatMessage(
@@ -9,12 +10,24 @@ async function postChatMessage(
 	return await messageRepository.postMessage(to, from, message);
 }
 
-async function generateAIResponse(toUser: string) {
-	const message =
-		"This is an automatic answer that is not yet connected to ChatGPT";
+async function generateAIResponse(toUser: string, userMessage: string) {
+	const apiEndpoint = process.env.OPENAI_ENDPOINT;
+	const headers = {
+		"Content-Type": "application/json",
+		Authorization: `Bearer ${process.env.OPENAI_KEY}`,
+	};
+
+	const data = {
+		model: "gpt-3.5-turbo",
+		messages: [{ role: "user", content: userMessage }],
+	};
+
+	const ChatResponse = await axios.post(apiEndpoint, data, { headers });
+	const ChatAnswer = ChatResponse.data.choices[0].message.content;
+
 	const from = "TalkToAnything";
 
-	return await messageRepository.postMessage(toUser, from, message);
+	return await messageRepository.postMessage(toUser, from, ChatAnswer);
 }
 
 async function retrieveChat(user: string): Promise<messages[]> {
