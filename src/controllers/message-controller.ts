@@ -10,6 +10,7 @@ export async function generateResponse(req: Request, res: Response) {
 
 	try {
 		const gptResponse = await messageService.generateAIResponse(message);
+		console.log(gptResponse);
 		return res.status(201).send(gptResponse);
 	} catch (err) {
 		console.log(err);
