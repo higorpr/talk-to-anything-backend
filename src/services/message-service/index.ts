@@ -2,14 +2,6 @@ import { messageRepository } from "../../repositories/message-repository";
 import { messages } from "prisma/prisma-client";
 import axios from "axios";
 
-async function postChatMessage(
-	to: string,
-	from: string,
-	message: string
-): Promise<messages> {
-	return await messageRepository.postMessage(to, from, message);
-}
-
 async function generateAIResponse(userMessage: string) {
 	const apiEndpoint = process.env.OPENAI_ENDPOINT;
 	const headers = {
@@ -33,7 +25,6 @@ async function retrieveChat(user: string): Promise<messages[]> {
 }
 
 export const messageService = {
-	postChatMessage,
 	retrieveChat,
 	generateAIResponse,
 };
