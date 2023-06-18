@@ -9,6 +9,7 @@ export async function generateResponse(req: Request, res: Response) {
 	const { message } = req.body;
 
 	try {
+		console.log('Entrei aqui')
 		const gptResponse = await messageService.generateAIResponse(message);
 		console.log(gptResponse);
 		return res.status(201).send(gptResponse);
