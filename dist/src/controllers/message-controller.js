@@ -40,27 +40,25 @@ exports.getChat = exports.generateResponse = void 0;
 var message_service_1 = require("../services/message-service");
 function generateResponse(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, user, message, chat, err_1;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
+        var message, gptResponse, err_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _a = req.body, user = _a.user, message = _a.message;
-                    chat = "TalkToAnything";
-                    _b.label = 1;
+                    message = req.body.message;
+                    _a.label = 1;
                 case 1:
-                    _b.trys.push([1, 4, , 5]);
-                    return [4 /*yield*/, message_service_1.messageService.postChatMessage(chat, user, message)];
+                    _a.trys.push([1, 3, , 4]);
+                    console.log("Entrei aqui");
+                    return [4 /*yield*/, message_service_1.messageService.generateAIResponse(message)];
                 case 2:
-                    _b.sent();
-                    return [4 /*yield*/, message_service_1.messageService.generateAIResponse(user, message)];
+                    gptResponse = _a.sent();
+                    console.log(gptResponse);
+                    return [2 /*return*/, res.status(201).send(gptResponse)];
                 case 3:
-                    _b.sent();
-                    return [2 /*return*/, res.sendStatus(201)];
-                case 4:
-                    err_1 = _b.sent();
+                    err_1 = _a.sent();
                     console.log(err_1);
-                    return [3 /*break*/, 5];
-                case 5: return [2 /*return*/];
+                    return [2 /*return*/, res.status(500).send(err_1)];
+                case 4: return [2 /*return*/];
             }
         });
     });
@@ -83,7 +81,7 @@ function getChat(req, res) {
                 case 3:
                     err_2 = _a.sent();
                     console.log(err_2);
-                    return [3 /*break*/, 4];
+                    return [2 /*return*/, res.status(500).send(err_2)];
                 case 4: return [2 /*return*/];
             }
         });

@@ -38,22 +38,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.messageRepository = void 0;
 var db_1 = require("../../config/db");
-function postMessage(to, from, message) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, db_1.prisma.messages.create({
-                        data: {
-                            to: to,
-                            from: from,
-                            text: message
-                        }
-                    })];
-                case 1: return [2 /*return*/, _a.sent()];
-            }
-        });
-    });
-}
 function getMessages(userName) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
@@ -83,6 +67,5 @@ function getMessages(userName) {
     });
 }
 exports.messageRepository = {
-    postMessage: postMessage,
     getMessages: getMessages
 };
