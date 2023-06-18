@@ -3,16 +3,14 @@ import { messageService } from "../services/message-service";
 
 export async function generateResponse(req: Request, res: Response) {
 	/*
-        Receives and saves the user message into the database, generates chatGPT response, saves response into database
+        Receives an user message, generates and returns the chatGPT response to that message
     */
 
-	const { user, message } = req.body;
-	const chat = "TalkToAnything";
+	const { message } = req.body;
 
 	try {
-		await messageService.postChatMessage(chat, user, message);
-		await messageService.generateAIResponse(user, message);
-		return res.sendStatus(201);
+		const gptResponse = await messageService.generateAIResponse(message);
+		return res.status(201).send(gptResponse);
 	} catch (err) {
 		console.log(err);
 	}
